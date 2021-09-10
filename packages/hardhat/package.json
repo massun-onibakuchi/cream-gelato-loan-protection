@@ -1,27 +1,48 @@
 {
-  "name": "nextjs-ethereum-starter-hardhat",
+  "name": "@cream-gelato/hardhat",
   "author": "@huntarosan",
   "license": "MIT",
   "version": "1.0.0",
   "scripts": {
-    "chain": "npx hardhat node",
-    "compile": "npx hardhat compile",
-    "deploy": "npx hardhat run scripts/deploy.ts --network localhost"
+    "chain": "hardhat node",
+    "compile": "hardhat compile",
+    "test": "hardhat test",
+    "type": "hardhat typechain",
+    "deploy": "hardhat deploy --network localhost && yarn export --network localhost",
+    "export": "hardhat run scripts/publish.ts",
+    "format:sol": "prettier --write 'contracts/**/*.sol'",
+    "format": "yarn format:sol && yarn prettier --write 'tests/**/*.ts'"
   },
-  "devDependencies": {
+  "dependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.2",
     "@nomiclabs/hardhat-waffle": "^2.0.1",
+    "@openzeppelin/contracts": "4.x",
     "@typechain/ethers-v5": "^7.0.1",
-    "@typechain/hardhat": "^2.0.2",
-    "@types/chai": "^4.2.18",
-    "@types/mocha": "^8.2.2",
-    "@types/node": "^15.12.2",
+    "@typechain/hardhat": "^2.3.0",
+    "@uniswap/v2-periphery": "^1.1.0-beta.0",
     "chai": "^4.3.4",
-    "ethereum-waffle": "^3.3.0",
-    "ethers": "^5.2.0",
-    "hardhat": "^2.3.0",
-    "ts-node": "^10.0.0",
-    "typechain": "^5.0.0",
-    "typescript": "^4.3.2"
-  }
+    "chai-bignumber": "^3.0.0",
+    "dotenv": "^10.0.0",
+    "ethereum-waffle": "^3.0.0",
+    "ethers": "^5.4.5",
+    "hardhat": "^2.6.0",
+    "hardhat-dependency-compiler": "^1.1.1",
+    "hardhat-deploy": "^0.8.11",
+    "hardhat-etherscan-abi": "^0.1.1",
+    "ts-generator": "^0.1.1",
+    "ts-node": "^10.2.1",
+    "typechain": "^5.1.2",
+    "typescript": "^4.3.5"
+},
+"devDependencies": {
+    "@types/chai": "^4.2.15",
+    "@types/mocha": "^8.2.1",
+    "@types/node": "^14.14.35",
+    "@typescript-eslint/eslint-plugin": "^4.18.0",
+    "@typescript-eslint/parser": "^4.18.0",
+    "eslint": "^7.22.0",
+    "prettier": "^2.2.1",
+    "prettier-plugin-solidity": "^1.0.0-beta.6",
+    "solhint": "^3.3.4"
+}
 }
