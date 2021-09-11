@@ -1,14 +1,19 @@
 {
-  "name": "nextjs-ethereum-starter",
+  "name": "@cream-gelato/monorepo",
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "yarn workspace nextjs-ethereum-starter-frontend dev",
-    "build": "yarn workspace nextjs-ethereum-starter-frontend build",
-    "start": "yarn workspace nextjs-ethereum-starter-frontend start",
-    "chain": "yarn workspace nextjs-ethereum-starter-hardhat chain",
-    "deploy": "yarn workspace nextjs-ethereum-starter-hardhat deploy",
-    "compile": "yarn workspace nextjs-ethereum-starter-hardhat compile"
+    "dev": "yarn workspace @cream-gelato/frontend dev",
+    "build": "yarn workspace @cream-gelato/frontend build",
+    "node": "yarn workspace @cream-gelato/hardhat chain",
+    "chain": "yarn workspace @cream-gelato/hardhat chain",
+    "test": "yarn workspace @cream-gelato/hardhat test",
+    "compile": "yarn workspace @cream-gelato/hardhat compile",
+    "deploy": "yarn workspace @cream-gelato/hardhat deploy",
+    "start": "yarn workspace @cream-gelato/frontend start",
+    "format": "yarn workspace @cream-gelato/hardhat format && yarn workspace @cream-gelato/frontend format",
+    "lint:fix": "yarn workspace @cream-gelato/frontend lint:fix",
+    "lint": "yarn workspace @cream-gelato/frontend lint"
   },
   "workspaces": {
     "packages": [

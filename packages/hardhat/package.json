@@ -4,14 +4,14 @@
   "license": "MIT",
   "version": "1.0.0",
   "scripts": {
-    "chain": "hardhat node",
+    "chain": "hardhat node --no-deploy",
     "compile": "hardhat compile",
     "test": "hardhat test",
     "type": "hardhat typechain",
     "deploy": "hardhat deploy --network localhost && yarn export --network localhost",
     "export": "hardhat run scripts/publish.ts",
     "format:sol": "prettier --write 'contracts/**/*.sol'",
-    "format": "yarn format:sol && yarn prettier --write 'tests/**/*.ts'"
+    "format": "yarn format:sol && yarn prettier --write 'test/**/*.ts'"
   },
   "dependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.2",
