@@ -11,16 +11,10 @@ import {
   SliderTrack,
   Text,
 } from '@chakra-ui/react'
-import {
-  ChainId,
-  useContractCall,
-  useEthers,
-  useSendTransaction,
-} from '@usedapp/core'
+import { ChainId, useContractCall, useEthers, useSendTransaction } from '@usedapp/core'
 import { BigNumber, Contract, ethers, providers, utils } from 'ethers'
 import React, { useReducer, useState } from 'react'
 import { Layout } from '../components/layout/Layout'
-import CreamLoanSaverServiceTest from '../artifacts/contracts/CreamLoanSaverService.sol/CreamLoanSaverService.json'
 import { CreamLoanSaverServiceTest as LoanSaverType } from '../types/typechain'
 import { initialOptions, optionReducer } from '../components/optionReducer'
 import { useReserveData } from '../components/useReserveData'
@@ -39,8 +33,8 @@ function HomeIndex(): JSX.Element {
 
   const reserveData = useReserveData(chainId, account, localProvider)
   const accountData = useAccountData(chainId, account, localProvider)
-  console.log('accountData :>> ', accountData);
-  console.log('utils.formatEther(accountData.healthFactor) :>> ', utils.formatEther(accountData.healthFactor));
+  console.log('accountData :>> ', accountData)
+  console.log('utils.formatEther(accountData.healthFactor) :>> ', utils.formatEther(accountData.healthFactor))
   // const accountData = useContractCall({
   //   abi: new utils.Interface(CreamLoanSaverServiceTest.abi),
   //   address: LOAN_SAVER_ADDRESS,
@@ -55,7 +49,7 @@ function HomeIndex(): JSX.Element {
   ///@todo submitProtectionボタン
   const sample = reserveData
   // const sample = [
-  //   { name: 'feee', balance: BigNumber.from(11) }, 
+  //   { name: 'feee', balance: BigNumber.from(11) },
   //   // { tokenName: 'fe9999', balance: reserveData.length ? reserveData[0].balanceUnderlying.toString() : 0 }
   // ]
 
@@ -64,7 +58,7 @@ function HomeIndex(): JSX.Element {
   const signer = localProvider.getSigner()
 
   // Use the localProvider as the signer to send ETH to our wallet
-  const { sendTransaction } = useSendTransaction({ signer, })
+  const { sendTransaction } = useSendTransaction({ signer })
 
   function sendFunds(): void {
     sendTransaction({
@@ -92,9 +86,7 @@ function HomeIndex(): JSX.Element {
           <SelectAsset
             placeholder="Select col option"
             value={protectionAssets.col}
-            onChange={(e) =>
-              optionDispatch({ type: 'SET_COL', col: e.target.value })
-            }
+            onChange={(e) => optionDispatch({ type: 'SET_COL', col: e.target.value })}
             tokenMetaData={[
               {
                 address: '0x000',
@@ -105,9 +97,7 @@ function HomeIndex(): JSX.Element {
           <SelectAsset
             placeholder="Select bor option"
             value={protectionAssets.bor}
-            onChange={(e) =>
-              optionDispatch({ type: 'SET_BOR', bor: e.target.value })
-            }
+            onChange={(e) => optionDispatch({ type: 'SET_BOR', bor: e.target.value })}
             tokenMetaData={[
               {
                 address: '0x000',
@@ -133,7 +123,7 @@ function HomeIndex(): JSX.Element {
           </Slider>
 
           <Text fontSize="lg">Minimum Health Factor: {targetHealth}</Text>
-           <Slider
+          <Slider
             aria-label="slider-ex-5"
             defaultValue={parseFloat(utils.formatEther(accountData.healthFactor))}
             min={0}
@@ -164,14 +154,14 @@ function HomeIndex(): JSX.Element {
           <Button
             mt="2"
             colorScheme="teal"
-          // onClick={ }
+            // onClick={ }
           >
             Set Greeting
           </Button>
         </Box>
         <Divider my="8" borderColor="gray.400" />
       </Box>
-    </Layout >
+    </Layout>
   )
 }
 
