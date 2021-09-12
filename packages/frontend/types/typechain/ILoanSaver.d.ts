@@ -22,6 +22,7 @@ import { TypedEventFilter, TypedEvent, TypedListener } from "./commons";
 interface ILoanSaverInterface extends ethers.utils.Interface {
   functions: {
     "getUserProtectionAt(address,uint256)": FunctionFragment;
+    "getUserProtectionCount(address)": FunctionFragment;
     "isUnderThresholdHealthFactor(address)": FunctionFragment;
     "saveLoan(address,bytes32)": FunctionFragment;
   };
@@ -29,6 +30,10 @@ interface ILoanSaverInterface extends ethers.utils.Interface {
   encodeFunctionData(
     functionFragment: "getUserProtectionAt",
     values: [string, BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getUserProtectionCount",
+    values: [string]
   ): string;
   encodeFunctionData(
     functionFragment: "isUnderThresholdHealthFactor",
@@ -41,6 +46,10 @@ interface ILoanSaverInterface extends ethers.utils.Interface {
 
   decodeFunctionResult(
     functionFragment: "getUserProtectionAt",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getUserProtectionCount",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -100,7 +109,12 @@ export class ILoanSaver extends BaseContract {
       account: string,
       index: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<[string] & { protectionId: string }>;
+    ): Promise<[string]>;
+
+    getUserProtectionCount(
+      account: string,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
 
     isUnderThresholdHealthFactor(
       account: string,
@@ -120,6 +134,11 @@ export class ILoanSaver extends BaseContract {
     overrides?: CallOverrides
   ): Promise<string>;
 
+  getUserProtectionCount(
+    account: string,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
+
   isUnderThresholdHealthFactor(
     account: string,
     overrides?: CallOverrides
@@ -137,6 +156,11 @@ export class ILoanSaver extends BaseContract {
       index: BigNumberish,
       overrides?: CallOverrides
     ): Promise<string>;
+
+    getUserProtectionCount(
+      account: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     isUnderThresholdHealthFactor(
       account: string,
@@ -159,6 +183,11 @@ export class ILoanSaver extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    getUserProtectionCount(
+      account: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     isUnderThresholdHealthFactor(
       account: string,
       overrides?: CallOverrides
@@ -175,6 +204,11 @@ export class ILoanSaver extends BaseContract {
     getUserProtectionAt(
       account: string,
       index: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    getUserProtectionCount(
+      account: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 

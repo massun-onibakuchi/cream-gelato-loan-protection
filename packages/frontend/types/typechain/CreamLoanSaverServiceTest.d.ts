@@ -33,6 +33,7 @@ interface CreamLoanSaverServiceTestInterface extends ethers.utils.Interface {
     "flashLoan(address,address,uint256,tuple)": FunctionFragment;
     "getUserAccountData(address)": FunctionFragment;
     "getUserProtectionAt(address,uint256)": FunctionFragment;
+    "getUserProtectionCount(address)": FunctionFragment;
     "getUserProtectionData(bytes32)": FunctionFragment;
     "getUserReserveData(address,address)": FunctionFragment;
     "isUnderThresholdHealthFactor(address)": FunctionFragment;
@@ -121,6 +122,10 @@ interface CreamLoanSaverServiceTestInterface extends ethers.utils.Interface {
   encodeFunctionData(
     functionFragment: "getUserProtectionAt",
     values: [string, BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getUserProtectionCount",
+    values: [string]
   ): string;
   encodeFunctionData(
     functionFragment: "getUserProtectionData",
@@ -235,6 +240,10 @@ interface CreamLoanSaverServiceTestInterface extends ethers.utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "getUserProtectionAt",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getUserProtectionCount",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -431,7 +440,12 @@ export class CreamLoanSaverServiceTest extends BaseContract {
       account: string,
       index: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<[string] & { protectionId: string }>;
+    ): Promise<[string]>;
+
+    getUserProtectionCount(
+      account: string,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
 
     getUserProtectionData(
       id: BytesLike,
@@ -625,6 +639,11 @@ export class CreamLoanSaverServiceTest extends BaseContract {
     overrides?: CallOverrides
   ): Promise<string>;
 
+  getUserProtectionCount(
+    account: string,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
+
   getUserProtectionData(
     id: BytesLike,
     overrides?: CallOverrides
@@ -811,6 +830,11 @@ export class CreamLoanSaverServiceTest extends BaseContract {
       index: BigNumberish,
       overrides?: CallOverrides
     ): Promise<string>;
+
+    getUserProtectionCount(
+      account: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     getUserProtectionData(
       id: BytesLike,
@@ -1020,6 +1044,11 @@ export class CreamLoanSaverServiceTest extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    getUserProtectionCount(
+      account: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     getUserProtectionData(
       id: BytesLike,
       overrides?: CallOverrides
@@ -1186,6 +1215,11 @@ export class CreamLoanSaverServiceTest extends BaseContract {
     getUserProtectionAt(
       account: string,
       index: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    getUserProtectionCount(
+      account: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 

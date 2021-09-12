@@ -2,7 +2,7 @@ import { BigNumber } from 'ethers'
 import React, { useEffect, useState } from 'react'
 import { useEthers } from '@usedapp/core'
 import { constants } from '../constants'
-import { useLoanSaverServiceContract } from './hooks/useContract'
+import { useLoanSaverServiceContract } from './useContract'
 
 type Resolve<T extends Promise<any>> = T extends PromiseLike<infer P> ? P : never
 type TokenMetaDataType = typeof constants[keyof typeof constants][0]

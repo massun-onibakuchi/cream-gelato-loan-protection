@@ -319,8 +319,12 @@ contract CreamLoanSaver is PokeMeReady, CreamAccountDataProvider, ILoanSaver, IF
         price = oracle.getUnderlyingPrice(CToken(CUSDC_ADDRESS)) / 1e12;
     }
 
-    function getUserProtectionAt(address account, uint256 index) external view override returns (bytes32 protectionId) {
+    function getUserProtectionAt(address account, uint256 index) external view override returns (bytes32) {
         return _createdProtections[account].at(index);
+    }
+
+    function getUserProtectionCount(address account) external view override returns (uint256) {
+        return _createdProtections[account].length();
     }
 
     function getUserProtectionData(bytes32 id) external view returns (ProtectionData memory) {

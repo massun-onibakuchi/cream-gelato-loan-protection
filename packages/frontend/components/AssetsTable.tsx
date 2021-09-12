@@ -1,7 +1,7 @@
 import React from 'react'
 import { Table, Thead, Tbody, Tfoot, Tr, Th, Td, TableCaption } from '@chakra-ui/react'
 import { BigNumber, utils } from 'ethers'
-import type { ReserveData } from './useReserveData'
+import type { ReserveData } from '../hooks/useReserveData'
 
 type RowItemType = {
   name: string
