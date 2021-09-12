@@ -13,9 +13,157 @@ import * as Contracts from ".";
 declare module "hardhat/types/runtime" {
   interface HardhatEthersHelpers extends HardhatEthersHelpersBase {
     getContractFactory(
+      name: "Ownable",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.Ownable__factory>;
+    getContractFactory(
+      name: "ERC20",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.ERC20__factory>;
+    getContractFactory(
+      name: "IERC20Metadata",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IERC20Metadata__factory>;
+    getContractFactory(
+      name: "IERC20",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IERC20__factory>;
+    getContractFactory(
+      name: "IUniswapV2Router01",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IUniswapV2Router01__factory>;
+    getContractFactory(
+      name: "IUniswapV2Router02",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IUniswapV2Router02__factory>;
+    getContractFactory(
+      name: "CreamAccountDataProvider",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.CreamAccountDataProvider__factory>;
+    getContractFactory(
+      name: "CreamLoanSaver",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.CreamLoanSaver__factory>;
+    getContractFactory(
+      name: "CreamLoanSaverService",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.CreamLoanSaverService__factory>;
+    getContractFactory(
+      name: "Counter",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.Counter__factory>;
+    getContractFactory(
+      name: "CounterResolver",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.CounterResolver__factory>;
+    getContractFactory(
+      name: "ICounter",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.ICounter__factory>;
+    getContractFactory(
+      name: "Gelatofied",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.Gelatofied__factory>;
+    getContractFactory(
+      name: "IResolver",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IResolver__factory>;
+    getContractFactory(
+      name: "PokeMe",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.PokeMe__factory>;
+    getContractFactory(
+      name: "PokeMeReady",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.PokeMeReady__factory>;
+    getContractFactory(
+      name: "TaskTreasury",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.TaskTreasury__factory>;
+    getContractFactory(
+      name: "TaskTreasuryFantom",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.TaskTreasuryFantom__factory>;
+    getContractFactory(
+      name: "TaskTreasuryMatic",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.TaskTreasuryMatic__factory>;
+    getContractFactory(
+      name: "CTokenInterface",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.CTokenInterface__factory>;
+    getContractFactory(
+      name: "IComptroller",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IComptroller__factory>;
+    getContractFactory(
+      name: "ICTokenFlashLoan",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.ICTokenFlashLoan__factory>;
+    getContractFactory(
+      name: "IFlashloanReceiver",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IFlashloanReceiver__factory>;
+    getContractFactory(
+      name: "ILoanSaver",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.ILoanSaver__factory>;
+    getContractFactory(
+      name: "IPriceOracle",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IPriceOracle__factory>;
+    getContractFactory(
+      name: "LoanSaverResolver",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.LoanSaverResolver__factory>;
+    getContractFactory(
+      name: "ComptrollerMock",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.ComptrollerMock__factory>;
+    getContractFactory(
+      name: "CTokenMock",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.CTokenMock__factory>;
+    getContractFactory(
+      name: "CusdCoin",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.CusdCoin__factory>;
+    getContractFactory(
+      name: "ERC20Mock",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.ERC20Mock__factory>;
+    getContractFactory(
+      name: "PriceOracleMock",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.PriceOracleMock__factory>;
+    getContractFactory(
+      name: "UniswapV2PairMock",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.UniswapV2PairMock__factory>;
+    getContractFactory(
+      name: "UniswapV2Router02Mock",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.UniswapV2Router02Mock__factory>;
+    getContractFactory(
+      name: "USDCoin",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.USDCoin__factory>;
+    getContractFactory(
+      name: "WETH",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.WETH__factory>;
+    getContractFactory(
       name: "Multicall",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.Multicall__factory>;
+    getContractFactory(
+      name: "CreamAccountDataProviderTest",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.CreamAccountDataProviderTest__factory>;
+    getContractFactory(
+      name: "CreamLoanSaverServiceTest",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.CreamLoanSaverServiceTest__factory>;
     getContractFactory(
       name: "YourContract",
       signerOrOptions?: ethers.Signer | FactoryOptions
