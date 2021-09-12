@@ -82,27 +82,13 @@ function HomeIndex(): JSX.Element {
     updateTransationStatus()
   }, [approvalState, submissionState])
 
-  ///@todo submitProtection hooks
+  ///@todo submitProtection 機能するか？
 
-  // const isLocalChain = chainId === ChainId.Localhost || chainId === ChainId.Hardhat
-  const signer = library?.getSigner()
-
-  const { sendTransaction } = useSendTransaction({ signer })
-
-  function sendFunds(): void {
-    sendTransaction({
-      to: account,
-      value: utils.parseEther('0.1'),
-    })
-  }
   return (
     <Layout>
       <Heading as="h1" mb="8">
         Cream Fi x Gelato:Loan Protection System
       </Heading>
-      {/* <Text mt="8" fontSize="xl">
-        This page only works on the ROPSTEN Testnet or on a Local Chain.
-      </Text> */}
       <Box maxWidth="container.sm" p="8" mt="8" bg="gray.100">
         <Divider my="8" borderColor="gray.400" />
         <Box>
@@ -111,11 +97,13 @@ function HomeIndex(): JSX.Element {
         </Box>
         <Divider my="8" borderColor="gray.400" />
         <Box>
+          <Text fontSize="lg">Select collateral asset for loan protection</Text>
           <SelectCollateral
             col={protectionAssets.col}
             onChange={(e) => optionDispatch({ type: 'SET_COL', col: e.target.value })}
             tokenMetaData={reserveData}
           />
+          <Text fontSize="lg">Select debt asset for loan protection</Text>
           <SelectDebt
             bor={protectionAssets.bor}
             onChange={(e) => optionDispatch({ type: 'SET_BOR', bor: e.target.value })}
