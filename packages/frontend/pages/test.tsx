@@ -11,16 +11,18 @@ import {
   SliderTrack,
   Text,
 } from '@chakra-ui/react'
-import { ChainId, useContractCall, useEthers, useSendTransaction } from '@usedapp/core'
+import { ChainId, useContractCall, useContractFunction, useEthers, useSendTransaction } from '@usedapp/core'
 import { BigNumber, Contract, ethers, providers, utils } from 'ethers'
-import React, { useReducer, useState } from 'react'
+import React, { useEffect, useReducer, useState } from 'react'
 import { Layout } from '../components/layout/Layout'
-import { CreamLoanSaverServiceTest as LoanSaverType } from '../types/typechain'
 import { initialOptions, optionReducer } from '../components/optionReducer'
 import { useReserveData } from '../components/useReserveData'
 import { SelectAsset } from '../components/AssetSelect'
 import { AssetsTable } from '../components/AssetsTable'
 import { useAccountData } from '../components/useAccountData'
+import { CREAM_GELATO } from '../constants'
+import CreamLoanSaverServiceTest from '../artifacts/contracts/CreamLoanSaverService.sol/CreamLoanSaverService.json'
+import LoanSaverResolver from '../artifacts/contracts/LoanSaverResolver.sol/LoanSaverResolver.json'
 
 const localProvider = new providers.StaticJsonRpcProvider('http://localhost:8545')
 const EXP_SCALE = BigNumber.from(10).pow(18)
@@ -28,19 +30,57 @@ const toWei = utils.parseEther
 
 function HomeIndex(): JSX.Element {
   const [protectionAssets, optionDispatch] = useReducer(optionReducer, initialOptions)
-  const [healthFactors, setTargetHealth] = useState({ targetHealth: 1, thresholdHealth: 1 })
+  const [{ targetHealth, thresholdHealth }, setTargetHealth] = useState({ targetHealth: 1, thresholdHealth: 1 })
   const { account, chainId, library } = useEthers()
+  const [isLoading, setLoanding] = useState(false)
 
-  const reserveData = useReserveData(chainId, account, localProvider)
-  const accountData = useAccountData(chainId, account, localProvider)
+  const reserveData = useReserveData()
+  const accountData = useAccountData()
+
+  // const loanSaver = new Contract(
+  //   CREAM_GELATO[1337]['CreamLoanSaverService'],
+  //   CreamLoanSaverServiceTest.abi,
+  //   localProvider,
+  // )
+  const { state, send, events } = useContractFunction(loanSaver, 'submitProtection', { transactionName: 'Submit' })
+
+  console.log('reserveData :>> ', reserveData)
   console.log('accountData :>> ', accountData)
-  console.log('utils.formatEther(accountData.healthFactor) :>> ', utils.formatEther(accountData.healthFactor))
-  // const accountData = useContractCall({
-  //   abi: new utils.Interface(CreamLoanSaverServiceTest.abi),
-  //   address: LOAN_SAVER_ADDRESS,
-  //   method: 'getUserAccountData',
-  //   args: [account],
-  // }) ?? []
+  // console.log('state :>> ', state)
+  // console.log('events :>> ', events)
+
+  async function submitProtection() {
+    if (targetHealth < thresholdHealth || thresholdHealth < 1) return
+    if (library && account) {
+      setLoanding(true)
+      const RESOLVER_ADDRESS = CREAM_GELATO[chainId]['LoanSaverResolver']
+      const resolverData = new Contract(RESOLVER_ADDRESS, LoanSaverResolver.abi).interface.encodeFunctionData(
+        'checker',
+        [account, 0],
+      )
+      await send(
+        thresholdHealth,
+        targetHealth,
+        protectionAssets.col,
+        protectionAssets.bor,
+        RESOLVER_ADDRESS,
+        resolverData,
+        false,
+      )
+      updateTransationStatus()
+    }
+  }
+  async function updateTransationStatus() {
+    if (!library || !state) return
+    if (state.status === 'Mining') {
+      setLoanding(true)
+    } else {
+      setLoanding(false)
+    }
+  }
+  // useEffect(() => {
+  //   updateTransationStatus()
+  // }, [state])
 
   ///@todo アセットのリストを保有残高がないなら除き動的に変える（優先度低)
   ///@todo supply debtトークンのname,残高を表示する
@@ -48,10 +88,6 @@ function HomeIndex(): JSX.Element {
   ///@todo thresholudHFを設定する
   ///@todo submitProtectionボタン
   const sample = reserveData
-  // const sample = [
-  //   { name: 'feee', balance: BigNumber.from(11) },
-  //   // { tokenName: 'fe9999', balance: reserveData.length ? reserveData[0].balanceUnderlying.toString() : 0 }
-  // ]
 
   const isLocalChain = chainId === ChainId.Localhost || chainId === ChainId.Hardhat
 
@@ -122,14 +158,14 @@ function HomeIndex(): JSX.Element {
             <SliderThumb />
           </Slider>
 
-          <Text fontSize="lg">Minimum Health Factor: {healthFactors.thresholdHealth}</Text>
+          <Text fontSize="lg">Minimum Health Factor: {thresholdHealth}</Text>
           <Slider
             aria-label="slider-ex-5"
             defaultValue={parseFloat(utils.formatEther(accountData.healthFactor))}
             min={0}
             max={10}
             step={0.05}
-            onChange={(v) => setTargetHealth({ ...healthFactors, thresholdHealth: v })}
+            onChange={(v) => setTargetHealth(state => ({ ...state, thresholdHealth: v }))}
           >
             <SliderTrack>
               <SliderFilledTrack />
@@ -137,25 +173,21 @@ function HomeIndex(): JSX.Element {
             <SliderThumb />
           </Slider>
 
-          <Text fontSize="lg">Target Health Factor: {healthFactors}</Text>
+          <Text fontSize="lg">Target Health Factor: {targetHealth}</Text>
           <Slider
             aria-label="slider-ex-5"
             defaultValue={parseFloat(utils.formatEther(accountData.healthFactor))}
             min={0}
             max={10}
             step={0.05}
-            onChange={(v) => setTargetHealth({ ...healthFactors, targetHealth: v })}
+            onChange={(v) => setTargetHealth(state => ({ ...state, targetHealth: v }))}
           >
             <SliderTrack>
               <SliderFilledTrack />
             </SliderTrack>
             <SliderThumb />
           </Slider>
-          <Button
-            mt="2"
-            colorScheme="teal"
-          // onClick={ }
-          >
+          <Button mt="2" colorScheme="teal" onClick={submitProtection} isLoading={isLoading}>
             Set Greeting
           </Button>
         </Box>

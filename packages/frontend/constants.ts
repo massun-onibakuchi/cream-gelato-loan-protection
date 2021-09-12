@@ -5,9 +5,8 @@ import {
   CusdCoin as CUSDC_ADDRESS,
   CTokenMock as CTOKEN_ADDRESS,
   CreamLoanSaverServiceTest as LOAN_SAVER_ADDRESS,
+  LoanSaverResolver as RESOLVER_ADDRESS,
 } from './artifacts/contracts/contractAddress'
-import CreamLoanSaverServiceTest from './artifacts/contracts/CreamLoanSaverService.sol/CreamLoanSaverService.json'
-import { CreamLoanSaverServiceTest as LoanSaverType } from './types/typechain'
 
 export const constants = {
   [ChainId.Localhost]: [
@@ -28,5 +27,12 @@ export const constants = {
   ],
 }
 export const CREAM_GELATO = {
-  [ChainId.Localhost]: { CreamLoanSaverService: LOAN_SAVER_ADDRESS },
+  [0]: {
+    CreamLoanSaverService: LOAN_SAVER_ADDRESS,
+    LoanSaverResolver: RESOLVER_ADDRESS,
+  },
+  [ChainId.Localhost]: {
+    CreamLoanSaverService: LOAN_SAVER_ADDRESS,
+    LoanSaverResolver: RESOLVER_ADDRESS,
+  },
 }

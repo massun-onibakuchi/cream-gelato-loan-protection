@@ -1,14 +1,12 @@
-import { BigNumber, Contract, utils } from 'ethers'
+import { BigNumber } from 'ethers'
 import React, { useEffect, useState } from 'react'
-import { ChainId, useContractCall } from '@usedapp/core'
-import { CreamLoanSaverServiceTest as LOAN_SAVER_ADDRESS } from '../artifacts/contracts/contractAddress'
-import CreamLoanSaverServiceTest from '../artifacts/contracts/CreamLoanSaverService.sol/CreamLoanSaverService.json'
-import { CreamLoanSaverServiceTest as LoanSaverType } from '../types/typechain'
-import { CREAM_GELATO } from '../constants'
+import { ChainId, useEthers } from '@usedapp/core'
+import { useLoanSaverServiceContract } from './hooks/useContract'
 
-type Resolve<T extends Promise<any>> = T extends PromiseLike<infer P> ? P : never
 
+// type Resolve<T extends Promise<any>> = T extends PromiseLike<infer P> ? P : never
 // type AccountData= Partial<Resolve<ReturnType<LoanSaverType['getUserAccountData']>>
+
 type AccountData = {
   totalCollateralInEth: BigNumber
   totalBorrowInEth: BigNumber
@@ -16,7 +14,9 @@ type AccountData = {
   ethPerUsd: BigNumber
 }
 
-export function useAccountData(chainId: ChainId, account: string, provider?): AccountData {
+export function useAccountData(): AccountData {
+  const loanSaver = useLoanSaverServiceContract()
+  const { account } = useEthers()
   const [accountData, setAccountData] = useState({
     totalCollateralInEth: BigNumber.from(0),
     totalBorrowInEth: BigNumber.from(0),
@@ -25,13 +25,9 @@ export function useAccountData(chainId: ChainId, account: string, provider?): Ac
   })
 
   useEffect(() => {
+    if (!loanSaver || !account) return
     fetchData()
     async function fetchData() {
-      const loanSaver = new Contract(
-        CREAM_GELATO[chainId]['CreamLoanSaverService'],
-        CreamLoanSaverServiceTest.abi,
-        provider,
-      ) as LoanSaverType
       const data = await loanSaver.getUserAccountData(account)
       setAccountData({
         totalCollateralInEth: data.totalCollateralInEth,

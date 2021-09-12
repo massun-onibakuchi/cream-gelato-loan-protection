@@ -1,14 +1,8 @@
-import { BigNumber, Contract, utils } from 'ethers'
-import React, { useEffect, useReducer, useState } from 'react'
-import { useContractCall, ChainId } from '@usedapp/core'
-import {
-  CreamLoanSaverServiceTest as LOAN_SAVER_ADDRESS,
-  ComptrollerMock as COMPTROLLER_ADDRESS,
-} from '../artifacts/contracts/contractAddress'
-import CreamLoanSaverServiceTest from '../artifacts/contracts/CreamLoanSaverService.sol/CreamLoanSaverService.json'
-import ComptrollerMock from '../artifacts/contracts/mock/ComptrollerMock.sol/ComptrollerMock.json'
-import { CreamLoanSaverServiceTest as LoanSaverType } from '../types/typechain'
-import { constants, CREAM_GELATO } from '../constants'
+import { BigNumber } from 'ethers'
+import React, { useEffect, useState } from 'react'
+import { useEthers } from '@usedapp/core'
+import { constants } from '../constants'
+import { useLoanSaverServiceContract } from './hooks/useContract'
 
 type Resolve<T extends Promise<any>> = T extends PromiseLike<infer P> ? P : never
 type TokenMetaDataType = typeof constants[keyof typeof constants][0]
@@ -21,20 +15,17 @@ export type ReserveData = {
   borrowRatePerBlock: BigNumber
 } & TokenMetaDataType
 
-export function useReserveData(chainId: ChainId, account: string, provider): ReserveData[] {
+export function useReserveData(): ReserveData[] {
   const [assets, setAssets] = useState([])
+  const { account, chainId } = useEthers()
+  const loanSaver = useLoanSaverServiceContract()
 
   useEffect(() => {
     updateAssets()
 
     async function updateAssets() {
-      if (!chainId) return
+      if (!chainId || !loanSaver || !account) return
       try {
-        const loanSaver = new Contract(
-          CREAM_GELATO[chainId]['CreamLoanSaverService'],
-          CreamLoanSaverServiceTest.abi,
-          provider,
-        ) as LoanSaverType
         const _assets = (await Promise.all(
           constants[chainId].map((v) => loanSaver.getUserReserveData(v.address, account)),
         )) as Partial<ReserveData>[]
