@@ -28,7 +28,7 @@ const toWei = utils.parseEther
 
 function HomeIndex(): JSX.Element {
   const [protectionAssets, optionDispatch] = useReducer(optionReducer, initialOptions)
-  const [targetHealth, setTargetHealth] = useState(1)
+  const [healthFactors, setTargetHealth] = useState({ targetHealth: 1, thresholdHealth: 1 })
   const { account, chainId, library } = useEthers()
 
   const reserveData = useReserveData(chainId, account, localProvider)
@@ -122,14 +122,14 @@ function HomeIndex(): JSX.Element {
             <SliderThumb />
           </Slider>
 
-          <Text fontSize="lg">Minimum Health Factor: {targetHealth}</Text>
+          <Text fontSize="lg">Minimum Health Factor: {healthFactors.thresholdHealth}</Text>
           <Slider
             aria-label="slider-ex-5"
             defaultValue={parseFloat(utils.formatEther(accountData.healthFactor))}
             min={0}
             max={10}
             step={0.05}
-            onChange={(v) => setTargetHealth(v)}
+            onChange={(v) => setTargetHealth({ ...healthFactors, thresholdHealth: v })}
           >
             <SliderTrack>
               <SliderFilledTrack />
@@ -137,14 +137,14 @@ function HomeIndex(): JSX.Element {
             <SliderThumb />
           </Slider>
 
-          <Text fontSize="lg">Target Health Factor: {targetHealth}</Text>
+          <Text fontSize="lg">Target Health Factor: {healthFactors}</Text>
           <Slider
             aria-label="slider-ex-5"
             defaultValue={parseFloat(utils.formatEther(accountData.healthFactor))}
             min={0}
             max={10}
             step={0.05}
-            onChange={(v) => setTargetHealth(v)}
+            onChange={(v) => setTargetHealth({ ...healthFactors, targetHealth: v })}
           >
             <SliderTrack>
               <SliderFilledTrack />
@@ -154,7 +154,7 @@ function HomeIndex(): JSX.Element {
           <Button
             mt="2"
             colorScheme="teal"
-            // onClick={ }
+          // onClick={ }
           >
             Set Greeting
           </Button>
