@@ -21,10 +21,7 @@ export function ConnectWallet(): JSX.Element {
 
   return (
     <>
-      <Box
-        order={[-1, null, null, 2]}
-        textAlign={['left', null, null, 'right']}
-      >
+      <Box order={[-1, null, null, 2]} textAlign={['left', null, null, 'right']}>
         <Button colorScheme="teal" variant="outline" onClick={onOpen}>
           Connect to a wallet
         </Button>
@@ -41,13 +38,7 @@ export function ConnectWallet(): JSX.Element {
               mb="4"
               size="lg"
               variant="outline"
-              rightIcon={
-                <Image
-                  maxWidth="20px"
-                  src="/images/logo-metamask.png"
-                  alt="MetaMask"
-                />
-              }
+              rightIcon={<Image maxWidth="20px" src="/images/logo-metamask.png" alt="MetaMask" />}
               onClick={() => {
                 activateBrowserWallet()
               }}
@@ -60,13 +51,7 @@ export function ConnectWallet(): JSX.Element {
               mb="4"
               size="lg"
               variant="outline"
-              rightIcon={
-                <Image
-                  maxWidth="20px"
-                  src="/images/logo-walletconnect.svg"
-                  alt="WalletConnect"
-                />
-              }
+              rightIcon={<Image maxWidth="20px" src="/images/logo-walletconnect.svg" alt="WalletConnect" />}
               onClick={() => {
                 activate(walletconnect)
               }}

@@ -72,12 +72,7 @@ export const Layout = ({ children, customMeta }: LayoutProps): JSX.Element => {
       <Head customMeta={customMeta} />
       <header>
         <Container maxWidth="container.xl">
-          <SimpleGrid
-            columns={[1, 1, 1, 2]}
-            alignItems="center"
-            justifyContent="space-between"
-            py="8"
-          >
+          <SimpleGrid columns={[1, 1, 1, 2]} alignItems="center" justifyContent="space-between" py="8">
             <Flex py={[4, null, null, 0]}>
               <NextLink href="/" passHref>
                 <Link px="4" py="1">
@@ -139,22 +134,12 @@ export const Layout = ({ children, customMeta }: LayoutProps): JSX.Element => {
               return null
             }
             return (
-              <Alert
-                key={notification.id}
-                status="success"
-                position="fixed"
-                bottom="8"
-                right="8"
-                width="400px"
-              >
+              <Alert key={notification.id} status="success" position="fixed" bottom="8" right="8" width="400px">
                 <AlertIcon />
                 <Box>
-                  <AlertTitle>
-                    {TRANSACTION_TITLES[notification.type]}
-                  </AlertTitle>
+                  <AlertTitle>{TRANSACTION_TITLES[notification.type]}</AlertTitle>
                   <AlertDescription overflow="hidden">
-                    Transaction Hash:{' '}
-                    {truncateHash(notification.transaction.hash, 61)}
+                    Transaction Hash: {truncateHash(notification.transaction.hash, 61)}
                   </AlertDescription>
                 </Box>
               </Alert>
@@ -165,8 +150,7 @@ export const Layout = ({ children, customMeta }: LayoutProps): JSX.Element => {
       <footer>
         <Container mt="8" py="8" maxWidth="container.xl">
           <Text>
-            Built by{' '}
-            <Link href="https://twitter.com/huntarosan">Hunter Chang</Link>
+            Built by <Link href="https://twitter.com/huntarosan">Hunter Chang</Link>
           </Text>
         </Container>
       </footer>

@@ -1,13 +1,4 @@
-import {
-  Alert,
-  AlertIcon,
-  Box,
-  Button,
-  Divider,
-  Heading,
-  Input,
-  Text,
-} from '@chakra-ui/react'
+import { Alert, AlertIcon, Box, Button, Divider, Heading, Input, Text } from '@chakra-ui/react'
 import { useEthers } from '@usedapp/core'
 import { utils } from 'ethers'
 import { useReducer } from 'react'
@@ -97,14 +88,7 @@ function SignatureExampleIndex(): JSX.Element {
   const { library } = useEthers()
 
   const [state, dispatch] = useReducer(reducer, initialState)
-  const {
-    signature,
-    messageToSign,
-    addressToVerify,
-    signatureToVerify,
-    messageToVerify,
-    verificationSuccess,
-  } = state
+  const { signature, messageToSign, addressToVerify, signatureToVerify, messageToVerify, verificationSuccess } = state
 
   const sign = async () => {
     if (library) {
@@ -119,10 +103,7 @@ function SignatureExampleIndex(): JSX.Element {
 
   const verifySignature = () => {
     if (messageToVerify && signatureToVerify) {
-      const addressFromMessage = utils.verifyMessage(
-        messageToVerify,
-        signatureToVerify
-      )
+      const addressFromMessage = utils.verifyMessage(messageToVerify, signatureToVerify)
       if (addressFromMessage === addressToVerify) {
         dispatch({
           type: 'SET_VERIFICATION_SUCCESS',
@@ -169,9 +150,7 @@ function SignatureExampleIndex(): JSX.Element {
       <Text mt="8">This is the signature: {signature}</Text>
       <Divider my="8" />
       <Box maxWidth="container.sm">
-        <Text fontWeight="semibold">
-          Enter an Address, Signature, and Message to verify the Message.
-        </Text>
+        <Text fontWeight="semibold">Enter an Address, Signature, and Message to verify the Message.</Text>
         <Text mt="6">Address:</Text>
         <Input
           mt="2"

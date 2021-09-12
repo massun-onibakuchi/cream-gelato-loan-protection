@@ -35,15 +35,13 @@ function GraphExampleIndex(): JSX.Element {
       )}
       {!loading &&
         !error &&
-        data.markets.map(
-          ({ id, underlyingName, underlyingSymbol, underlyingPriceUSD }) => (
-            <Box key={id} mt="8">
-              <Text>Name: {underlyingName}</Text>
-              <Text>Symbol: {underlyingSymbol}</Text>
-              <Text>Price: ${underlyingPriceUSD}</Text>
-            </Box>
-          )
-        )}
+        data.markets.map(({ id, underlyingName, underlyingSymbol, underlyingPriceUSD }) => (
+          <Box key={id} mt="8">
+            <Text>Name: {underlyingName}</Text>
+            <Text>Symbol: {underlyingSymbol}</Text>
+            <Text>Price: ${underlyingPriceUSD}</Text>
+          </Box>
+        ))}
     </Layout>
   )
 }

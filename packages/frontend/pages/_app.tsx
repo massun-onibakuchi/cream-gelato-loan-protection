@@ -1,11 +1,6 @@
 import { ApolloProvider } from '@apollo/client'
 import { ChakraProvider } from '@chakra-ui/react'
-import {
-  ChainId,
-  Config,
-  DAppProvider,
-  MULTICALL_ADDRESSES,
-} from '@usedapp/core'
+import { ChainId, Config, DAppProvider, MULTICALL_ADDRESSES } from '@usedapp/core'
 import type { AppProps } from 'next/app'
 import React from 'react'
 import { MulticallContract } from '../artifacts/contracts/contractAddress'
@@ -17,7 +12,7 @@ export const INFURA_ID = '460f40a260564ac4a4f4b3fffb032dad'
 const config: Config = {
   readOnlyUrls: {
     [ChainId.Ropsten]: `https://ropsten.infura.io/v3/${INFURA_ID}`,
-    [ChainId.Hardhat]: 'http://localhost:8545',
+    [ChainId.Hardhat]: 'http://localhost:9545',
     [ChainId.Localhost]: 'http://localhost:8545',
   },
   supportedChains: [

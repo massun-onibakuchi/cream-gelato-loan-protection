@@ -40,10 +40,7 @@ export const initialOptions: AssetType = {
   col: '',
   bor: '',
 }
-export const optionReducer = (
-  state: AssetType,
-  action: ProtectionActionType
-) => {
+export const optionReducer = (state: AssetType, action: ProtectionActionType) => {
   switch (action.type) {
     case 'SET_COL':
       if (state.bor === action.col) return state

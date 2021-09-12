@@ -1,24 +1,14 @@
 import React from 'react'
-import {
-  Table,
-  Thead,
-  Tbody,
-  Tfoot,
-  Tr,
-  Th,
-  Td,
-  TableCaption,
-} from '@chakra-ui/react'
+import { Table, Thead, Tbody, Tfoot, Tr, Th, Td, TableCaption } from '@chakra-ui/react'
 import { BigNumber, utils } from 'ethers'
-import type { ReserveData } from './useReserveData';
-
+import type { ReserveData } from './useReserveData'
 
 type RowItemType = {
-  name: string;
-  symbol: string;
-  decimals: number | BigNumber;
-  balanceUnderlying: BigNumber;
-  debtUnderlying: BigNumber;
+  name: string
+  symbol: string
+  decimals: number | BigNumber
+  balanceUnderlying: BigNumber
+  debtUnderlying: BigNumber
 }
 
 type AssetsTableType = {
@@ -26,15 +16,14 @@ type AssetsTableType = {
 }
 
 function TableRowItem(props: RowItemType) {
-  return (
-    props ? (
-      <Tr>
-        <Td>icon</Td>
-        <Td>{props.symbol}</Td>
-        <Td isNumeric>{utils.formatUnits(props.balanceUnderlying, props.decimals)}</Td>
-        <Td isNumeric>{utils.formatUnits(props.debtUnderlying, props.decimals)}</Td>
-      </Tr>) : null
-  )
+  return props ? (
+    <Tr>
+      <Td>icon</Td>
+      <Td>{props.symbol}</Td>
+      <Td isNumeric>{utils.formatUnits(props.balanceUnderlying, props.decimals)}</Td>
+      <Td isNumeric>{utils.formatUnits(props.debtUnderlying, props.decimals)}</Td>
+    </Tr>
+  ) : null
 }
 
 export function AssetsTable(props: AssetsTableType) {

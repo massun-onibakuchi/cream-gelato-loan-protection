@@ -11,9 +11,7 @@ import { YourContract as YourContractType } from '../types/typechain'
  * Constants & Helpers
  */
 
-const localProvider = new providers.StaticJsonRpcProvider(
-  'http://localhost:8545'
-)
+const localProvider = new providers.StaticJsonRpcProvider('http://localhost:8545')
 
 const ROPSTEN_CONTRACT_ADDRESS = '0x6b61a52b1EA15f4b8dB186126e980208E1E18864'
 
@@ -75,13 +73,9 @@ function HomeIndex(): JSX.Element {
   const [state, dispatch] = useReducer(reducer, initialState)
   const { account, chainId, library } = useEthers()
 
-  const isLocalChain =
-    chainId === ChainId.Localhost || chainId === ChainId.Hardhat
+  const isLocalChain = chainId === ChainId.Localhost || chainId === ChainId.Hardhat
 
-  const CONTRACT_ADDRESS =
-    chainId === ChainId.Ropsten
-      ? ROPSTEN_CONTRACT_ADDRESS
-      : LOCAL_CONTRACT_ADDRESS
+  const CONTRACT_ADDRESS = chainId === ChainId.Ropsten ? ROPSTEN_CONTRACT_ADDRESS : LOCAL_CONTRACT_ADDRESS
 
   // Use the localProvider as the signer to send ETH to our wallet
   const { sendTransaction } = useSendTransaction({
@@ -91,11 +85,7 @@ function HomeIndex(): JSX.Element {
   // call the smart contract, read the current greeting value
   async function fetchContractGreeting() {
     if (library) {
-      const contract = new ethers.Contract(
-        CONTRACT_ADDRESS,
-        YourContract.abi,
-        library
-      ) as YourContractType
+      const contract = new ethers.Contract(CONTRACT_ADDRESS, YourContract.abi, library) as YourContractType
       try {
         const data = await contract.greeting()
         dispatch({ type: 'SET_GREETING', greeting: data })
@@ -115,11 +105,7 @@ function HomeIndex(): JSX.Element {
         isLoading: true,
       })
       const signer = library.getSigner()
-      const contract = new ethers.Contract(
-        CONTRACT_ADDRESS,
-        YourContract.abi,
-        signer
-      ) as YourContractType
+      const contract = new ethers.Contract(CONTRACT_ADDRESS, YourContract.abi, signer) as YourContractType
       const transaction = await contract.setGreeting(state.inputValue)
       await transaction.wait()
       fetchContractGreeting()
@@ -178,22 +164,13 @@ function HomeIndex(): JSX.Element {
               })
             }}
           />
-          <Button
-            mt="2"
-            colorScheme="teal"
-            isLoading={state.isLoading}
-            onClick={setContractGreeting}
-          >
+          <Button mt="2" colorScheme="teal" isLoading={state.isLoading} onClick={setContractGreeting}>
             Set Greeting
           </Button>
         </Box>
         <Divider my="8" borderColor="gray.400" />
         <Text mb="4">This button only works on a Local Chain.</Text>
-        <Button
-          colorScheme="teal"
-          onClick={sendFunds}
-          isDisabled={!isLocalChain}
-        >
+        <Button colorScheme="teal" onClick={sendFunds} isDisabled={!isLocalChain}>
           Send Funds From Local Hardhat Chain
         </Button>
       </Box>

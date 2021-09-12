@@ -10,5 +10,9 @@ export function SelectAsset(props) {
   const selectOptions = tokens.map((metadata) => (
     <SelectItem key={metadata.address} value={metadata.address} name={metadata.name} />
   ))
-  return <Select placeholder={props.placeholder} value={props.value} onChange={props.onChange}>{selectOptions}</Select>
+  return (
+    <Select placeholder={props.placeholder} value={props.value} onChange={props.onChange}>
+      {selectOptions}
+    </Select>
+  )
 }
