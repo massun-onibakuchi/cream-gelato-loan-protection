@@ -9,6 +9,7 @@
     "chain": "yarn workspace @cream-gelato/hardhat chain",
     "test": "yarn workspace @cream-gelato/hardhat test",
     "compile": "yarn workspace @cream-gelato/hardhat compile",
+    "script": "yarn workspace @cream-gelato/hardhat script",
     "deploy": "yarn workspace @cream-gelato/hardhat deploy",
     "start": "yarn workspace @cream-gelato/frontend start",
     "format": "yarn workspace @cream-gelato/hardhat format && yarn workspace @cream-gelato/frontend format",
