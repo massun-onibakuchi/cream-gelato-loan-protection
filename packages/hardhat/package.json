@@ -8,6 +8,7 @@
     "compile": "hardhat compile",
     "test": "hardhat test",
     "type": "hardhat typechain",
+    "script": "hardhat run",
     "deploy": "hardhat deploy --network localhost && yarn export --network localhost",
     "export": "hardhat run scripts/publish.ts",
     "format:sol": "prettier --write 'contracts/**/*.sol'",

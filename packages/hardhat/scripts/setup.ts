@@ -49,6 +49,7 @@ const main = async () => {
     await oracle.setPrice(cToken0.address, TOKEN_PRICES[0])
     await oracle.setPrice(cToken1.address, TOKEN_PRICES[1])
     await fund([token0, token1], [cToken0, cToken1], pairD.address, wallet)
+
     await setLiquidity(
         [token0, token1],
         [cToken0, cToken1],
