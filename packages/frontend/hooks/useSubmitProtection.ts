@@ -7,10 +7,11 @@ export function useSubmitProtection() {
   const loanSaver = useLoanSaverServiceContract()
   const resolverContract = useLoanSaverResolverContract()
 
-  if (!loanSaver || !account || !resolverContract) return
   // @ts-ignore
   const { state, send, events } = useContractFunction(loanSaver, 'submitProtection', { transactionName: 'Submit' })
 
+  if (!loanSaver || !account || !resolverContract) return { state: null, submitProtection: null, events: null }
+  if (!state || !send || !events) return { state: null, submitProtection: null, events: null }
   return {
     state,
     submitProtection: async ({
@@ -28,15 +29,17 @@ export function useSubmitProtection() {
       useTaskTreasuryFunds?: boolean
       resolverCheckerIndex?: number | BigNumber | undefined
     }): Promise<void> => {
-      const resolverData = resolverContract.interface.encodeFunctionData('checker',
-        [
-          account,
-          resolverCheckerIndex || await resolverContract.getUserProtectionCount(account)
-            .then(count => count.add(1)).catch(e => {
-              console.debug("can not get user protection count", e)
+      const resolverData = resolverContract.interface.encodeFunctionData('checker', [
+        account,
+        resolverCheckerIndex ||
+          (await resolverContract
+            ?.getUserProtectionCount(account)
+            .then((count) => count.add(1))
+            .catch((e) => {
+              console.debug('can not get user protection count', e)
               return 0
-            })
-        ])
+            })),
+      ])
       return send(
         thresholdHealth,
         targetHealth,

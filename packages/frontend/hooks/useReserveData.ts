@@ -1,11 +1,11 @@
 import { BigNumber } from 'ethers'
 import React, { useEffect, useState } from 'react'
 import { useEthers } from '@usedapp/core'
-import { constants } from '../constants'
+import { TOKEN_METADATA } from '../constants'
 import { useLoanSaverServiceContract } from './useContract'
 
 type Resolve<T extends Promise<any>> = T extends PromiseLike<infer P> ? P : never
-type TokenMetaDataType = typeof constants[keyof typeof constants][0]
+type TokenMetaDataType = typeof TOKEN_METADATA[keyof typeof TOKEN_METADATA][0]
 
 export type ReserveData = {
   balanceUnderlying: BigNumber
@@ -27,10 +27,10 @@ export function useReserveData(): ReserveData[] {
       if (!chainId || !loanSaver || !account) return
       try {
         const _assets = (await Promise.all(
-          constants[chainId].map((v) => loanSaver.getUserReserveData(v.address, account)),
+          TOKEN_METADATA[chainId].map((v) => loanSaver.getUserReserveData(v.address, account)),
         )) as Partial<ReserveData>[]
         setAssets(
-          constants[chainId].map((v: any, i: number) => {
+          TOKEN_METADATA[chainId].map((v: any, i: number) => {
             return {
               balanceUnderlying: _assets[i].balanceUnderlying,
               debtUnderlying: _assets[i].debtUnderlying,

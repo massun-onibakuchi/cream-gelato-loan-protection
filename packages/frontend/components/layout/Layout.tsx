@@ -79,14 +79,9 @@ export const Layout = ({ children, customMeta }: LayoutProps): JSX.Element => {
                   Home
                 </Link>
               </NextLink>
-              <NextLink href="/graph-example" passHref>
+              <NextLink href="/protect-loan" passHref>
                 <Link px="4" py="1">
-                  Graph Example
-                </Link>
-              </NextLink>
-              <NextLink href="/signature-example" passHref>
-                <Link px="4" py="1">
-                  Signature Example
+                  Protect Loan
                 </Link>
               </NextLink>
             </Flex>
@@ -150,7 +145,7 @@ export const Layout = ({ children, customMeta }: LayoutProps): JSX.Element => {
       <footer>
         <Container mt="8" py="8" maxWidth="container.xl">
           <Text>
-            Built by <Link href="https://twitter.com/huntarosan">Hunter Chang</Link>
+            Powered by <Link href="https://twitter.com/">Gelato Network</Link>
           </Text>
         </Container>
       </footer>

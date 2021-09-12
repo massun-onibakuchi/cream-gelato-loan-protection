@@ -4,7 +4,7 @@ import { useMemo } from 'react'
 import { ERC20, useEthers } from '@usedapp/core'
 import CreamLoanSaverServiceTest from '../artifacts/contracts/CreamLoanSaverService.sol/CreamLoanSaverService.json'
 import LoanSaverResolver from '../artifacts/contracts/LoanSaverResolver.sol/LoanSaverResolver.json'
-import { CREAM_GELATO } from '../constants'
+import { CREAM_GELATO_CONTRACTS } from '../constants'
 
 // returns null on errors
 export function useContract<T extends Contract = Contract>(
@@ -30,7 +30,7 @@ export function useContract<T extends Contract = Contract>(
 }
 
 // account is optional
-export function getContract(address: string, ABI: any, library: Web3Provider, account?: string): Contract {
+function getContract(address: string, ABI: any, library: Web3Provider, account?: string): Contract {
   if (!utils.isAddress(address) || address === ethers.constants.AddressZero) {
     throw Error(`Invalid 'address' parameter '${address}'.`)
   }
@@ -49,10 +49,10 @@ function getProviderOrSigner(library: Web3Provider, account?: string): Web3Provi
 }
 
 export function useLoanSaverServiceContract(): Contract {
-  return useContract(CREAM_GELATO[0]['CreamLoanSaverService'], CreamLoanSaverServiceTest.abi, true)
+  return useContract(CREAM_GELATO_CONTRACTS[0]['CreamLoanSaverService'], CreamLoanSaverServiceTest.abi, true)
 }
 export function useLoanSaverResolverContract(): Contract {
-  return useContract(CREAM_GELATO[0]['LoanSaverResolver'], LoanSaverResolver.abi, true)
+  return useContract(CREAM_GELATO_CONTRACTS[0]['LoanSaverResolver'], LoanSaverResolver.abi, true)
 }
 export function useTokenContract(tokenAddress): Contract {
   return useContract(tokenAddress, ERC20.abi, true)

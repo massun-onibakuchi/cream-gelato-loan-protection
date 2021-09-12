@@ -1,7 +1,15 @@
 import {
-  Box, Button, Divider, Heading, Slider, SliderFilledTrack, SliderThumb, SliderTrack, Text,
+  Box,
+  Button,
+  Divider,
+  Heading,
+  Slider,
+  SliderFilledTrack,
+  SliderThumb,
+  SliderTrack,
+  Text,
 } from '@chakra-ui/react'
-import { useEthers, useSendTransaction, } from '@usedapp/core'
+import { useEthers, useSendTransaction } from '@usedapp/core'
 import { BigNumber, ethers, providers, utils } from 'ethers'
 import React, { useEffect, useReducer, useState } from 'react'
 import { Layout } from '../components/layout/Layout'
@@ -16,16 +24,16 @@ import { ApprovalState, useApproveCallback } from '../hooks/useApproveCallback'
 const toWei = utils.parseEther
 
 function HomeIndex(): JSX.Element {
+  const { account, chainId, library } = useEthers()
   const [protectionAssets, optionDispatch] = useReducer(optionReducer, initialOptions)
   const [{ targetHealth, thresholdHealth }, setTargetHealth] = useState({ targetHealth: 1, thresholdHealth: 1 })
-  const { account, chainId, library } = useEthers()
-  const [isLoading, setLoanding] = useState(false)
-
   const reserveData = useReserveData()
   const accountData = useAccountData()
 
+  const [isLoading, setLoanding] = useState(false)
+
   const { state: submissionState, submitProtection, events: submissionEvents } = useSubmitProtection()
-  const [approvalState, approve] = useApproveCallback(
+  const [approvalState, approve, ,] = useApproveCallback(
     { isNative: false, tokenAddr: protectionAssets?.col, amount: ethers.constants.MaxUint256 },
     account,
   )
@@ -33,19 +41,16 @@ function HomeIndex(): JSX.Element {
   // console.log('reserveData :>> ', reserveData)
   console.log('approveState :>> ', approvalState)
 
-  async function sendApproveTx() {
-    // for debug
-    // if (accountData?.healthFactor.gt(targetHealth) || targetHealth < thresholdHealth || thresholdHealth < 1) return
-    if (!library || !account /*|| resolverContract */ || isLoading) return
+  async function sendApproveTxn() {
+    if (!library || !account || isLoading || !approvalState || !approve) return
     setLoanding(true)
-    // await approve()
     await approve()
     updateTransationStatus()
   }
 
-  async function sendSubmitProtectionTx() {
-    if (targetHealth < thresholdHealth || thresholdHealth < 1) return
-    if (!account) return
+  async function sendSubmitProtectionTxn() {
+    if (!library || !account || isLoading || !submissionState || !submitProtection) return
+    if (!(targetHealth > thresholdHealth) || !(thresholdHealth > 1)) return
     setLoanding(true)
     await submitProtection({
       thresholdHealth: toWei(thresholdHealth.toString()),
@@ -55,7 +60,6 @@ function HomeIndex(): JSX.Element {
       useTaskTreasuryFunds: false,
     })
     updateTransationStatus()
-
   }
   async function updateTransationStatus() {
     if (!approvalState || !submissionState) return
@@ -67,21 +71,22 @@ function HomeIndex(): JSX.Element {
       setLoanding(true)
       return
     }
+    if (approvalState === ApprovalState.APPROVED) {
+      setLoanding(false)
+      return
+    }
     setLoanding(false)
   }
 
   useEffect(() => {
     updateTransationStatus()
-  }, [approvalState])
+  }, [approvalState, submissionState])
 
-  ///@todo アセットのリストを保有残高がないなら除き動的に変える（優先度低)
-  ///@todo allowanceとapproveのチェック
   ///@todo submitProtection hooks
 
   // const isLocalChain = chainId === ChainId.Localhost || chainId === ChainId.Hardhat
   const signer = library?.getSigner()
 
-  // Use the localProvider as the signer to send ETH to our wallet
   const { sendTransaction } = useSendTransaction({ signer })
 
   function sendFunds(): void {
@@ -93,11 +98,11 @@ function HomeIndex(): JSX.Element {
   return (
     <Layout>
       <Heading as="h1" mb="8">
-        Next.js Ethereum Starter
+        Cream Fi x Gelato:Loan Protection System
       </Heading>
-      <Text mt="8" fontSize="xl">
+      {/* <Text mt="8" fontSize="xl">
         This page only works on the ROPSTEN Testnet or on a Local Chain.
-      </Text>
+      </Text> */}
       <Box maxWidth="container.sm" p="8" mt="8" bg="gray.100">
         <Divider my="8" borderColor="gray.400" />
         <Box>
@@ -136,7 +141,7 @@ function HomeIndex(): JSX.Element {
           <Text fontSize="lg">Minimum Health Factor: {thresholdHealth}</Text>
           <Slider
             aria-label="slider-ex-5"
-            defaultValue={parseFloat(utils.formatEther(accountData.healthFactor))}
+            defaultValue={1}
             min={0}
             max={10}
             step={0.05}
@@ -151,7 +156,7 @@ function HomeIndex(): JSX.Element {
           <Text fontSize="lg">Target Health Factor: {targetHealth}</Text>
           <Slider
             aria-label="slider-ex-5"
-            defaultValue={parseFloat(utils.formatEther(accountData.healthFactor))}
+            defaultValue={1}
             min={0}
             max={10}
             step={0.05}
@@ -162,8 +167,14 @@ function HomeIndex(): JSX.Element {
             </SliderTrack>
             <SliderThumb />
           </Slider>
-          <Button mt="2" colorScheme="teal" onClick={sendApproveTx} isLoading={isLoading}>
-            Set Greeting
+          <Button
+            mt="2"
+            colorScheme="teal"
+            onClick={approvalState === ApprovalState.APPROVED ? sendSubmitProtectionTxn : sendApproveTxn}
+            isLoading={isLoading}
+            isDisabled={!protectionAssets.col || !protectionAssets.bor}
+          >
+            {approvalState === ApprovalState.APPROVED ? 'Submit protection' : 'Approve'}
           </Button>
         </Box>
         <Divider my="8" borderColor="gray.400" />

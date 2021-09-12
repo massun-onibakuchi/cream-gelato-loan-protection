@@ -8,7 +8,7 @@ import {
   LoanSaverResolver as RESOLVER_ADDRESS,
 } from './artifacts/contracts/contractAddress'
 
-export const constants = {
+export const TOKEN_METADATA = {
   [ChainId.Localhost]: [
     {
       name: 'USDCoin',
@@ -26,7 +26,7 @@ export const constants = {
     },
   ],
 }
-export const CREAM_GELATO = {
+export const CREAM_GELATO_CONTRACTS = {
   [0]: {
     CreamLoanSaverService: LOAN_SAVER_ADDRESS,
     LoanSaverResolver: RESOLVER_ADDRESS,

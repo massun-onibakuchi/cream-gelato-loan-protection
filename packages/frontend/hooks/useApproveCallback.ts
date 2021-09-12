@@ -10,7 +10,6 @@ export enum ApprovalState {
   APPROVED = 'APPROVED',
 }
 
-
 // returns a variable indicating the state of t he approval and a function which approves if necessary or early returns
 export function useApproveCallback(
   approvalData?: { tokenAddr: string; isNative?: boolean; amount: BigNumber },
