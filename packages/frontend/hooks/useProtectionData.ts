@@ -16,13 +16,13 @@ export type ProtectionData = {
 }
 
 export type ProtectionAssetData = {
-  col: ReserveData;
-  debt: ReserveData;
-  protectionId: string;
-  thresholdHealthFactor: BigNumber;
-  wantedHealthFactor: BigNumber;
-  colToken: string;
-  debtToken: string;
+  col: ReserveData
+  debt: ReserveData
+  protectionId: string
+  thresholdHealthFactor: BigNumber
+  wantedHealthFactor: BigNumber
+  colToken: string
+  debtToken: string
 }
 
 export function useProtectionData() {

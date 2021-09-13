@@ -31,13 +31,13 @@ function HomeIndex(): JSX.Element {
           </Box>
         </Box>
         <Divider my="4" borderColor="gray.400" />
-        <Box >
-          <Box >
+        <Box>
+          <Box>
             <Text fontSize="lg">Protections</Text>
-            <Box >
+            <Box>
               <ProtectionTable protectionList={protectionList} />
             </Box>
-          </Box >
+          </Box>
         </Box>
       </Box>
     </Layout>

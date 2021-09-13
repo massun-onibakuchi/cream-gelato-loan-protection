@@ -83,7 +83,7 @@ export const Layout = ({ children, customMeta }: LayoutProps): JSX.Element => {
           </NextLink>
         </Flex> */}
         <Container maxWidth="container.xl">
-          <SimpleGrid columns={[1, 1, 1, 2]} alignItems="center" justifyContent="space-between" py="4" >
+          <SimpleGrid columns={[1, 1, 1, 2]} alignItems="center" justifyContent="space-between" py="4">
             <Flex py={[4, null, null, 0]}>
               <NextLink href="/" passHref>
                 <Link px="  4" py="1">

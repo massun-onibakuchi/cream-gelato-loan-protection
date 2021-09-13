@@ -5,7 +5,7 @@ import React from 'react'
 export function TokenIcon(src, alt) {
   return (
     <>
-        <Image p="0" src={src} alt={alt} fallback={<Icon />} />
+      <Image p="0" src={src} alt={alt} fallback={<Icon />} />
     </>
   )
 }
