@@ -44,3 +44,5 @@ packages/frontend/build
 
 # contracts
 packages/frontend/artifacts/*
+packages/frontend/types/typechain/
+packages/frontend/types/typechain/factories
