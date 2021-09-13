@@ -1,7 +1,7 @@
 # Cream Gelato Loan Saver
 Automated Health Factor Maintenance Proof of Concept
 
-Cream Fi and Gelato Network integration + frontend
+Cream Fi and Gelato Network integration protocol monorepo
 
 Ref: [loan saver contracts](https://github.com/massun-onibakuchi/cream-gelato-contracts)
 
