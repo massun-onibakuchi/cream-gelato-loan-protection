@@ -1,32 +1,23 @@
-# 🏗 Scaffold-ETH
+# Cream Gelato Loan Saver
+Automated Health Factor Maintenance Proof of Concept
 
-> everything you need to build on Ethereum! 🚀
+Cream Fi and Gelato Network integration + frontend
 
-👀 [View the Live Demo](https://nextjs-scaffold-eth.vercel.app/)
+Ref: [loan saver contracts](https://github.com/massun-onibakuchi/cream-gelato-contracts)
 
-- [Next.js](https://nextjs.org)
-- [Typescript](https://www.typescriptlang.org/)
-- [Hardhat](https://hardhat.org/)
-- [TypeChain](https://github.com/ethereum-ts/TypeChain)
-- [Ethers.js](https://docs.ethers.io/v5/)
-- [useDApp](https://usedapp.io/)
-- [Chakra UI](https://chakra-ui.com/)
-- Linting with [ESLint](https://eslint.org/)
-- Formatting with [Prettier](https://prettier.io/)
+Demo:[YouTube](https://www.youtube.com/watch?v=vRnwgaruF7s)
+## Concept
+CreamFi users can specify their Minimum Health Factor and their Wanted Health Factor. Once a user’s Health Factor on CreamFi drops below their specified minimum threshold, Gelato will rebalance the user’s debt position on Cream, to attain the user’s specified Wanted Health Factor again. The bots achieve this on behalf of the user by swapping some of the user’s collateral for debt token and then repaying some of that debt. The bots swap the user’s collateral on Uniswap V2. This repo use Gelato PokeMe for autometed task.
 
-# 🏄‍♂️ Quick Start
+This repo use [ 🏗 Scaffold-ETH](https://github.com/scaffold-eth/scaffold-eth/tree/nextjs-typescript)
 
-Prerequisites: [Node](https://nodejs.org/en/download/) plus [Yarn](https://classic.yarnpkg.com/en/docs/install/) and [Git](https://git-scm.com/downloads)
+## Start up the Hardhat Network
 
-> clone/fork 🏗 scaffold-eth:
+```
+yarn
+```
 
-```bash
-git clone --branch nextjs-typescript https://github.com/austintgriffith/scaffold-eth.git
-cd scaffold-eth
-
-yarn install
-
-# Start up the Hardhat Network
+```
 yarn chain
 ```
 
@@ -36,7 +27,7 @@ Here we just install the npm project's dependencies, and by running `yarn chain`
 yarn deploy
 ```
 
-This will deploy the contract to Hardhat Network. After this completes run:
+This will deploy the contract to Hardhat Network and then publish artifacts abi and addresses. After this completes run:
 
 ```bash
 yarn dev
@@ -46,41 +37,10 @@ This will start up the Next.js development server and your site will be availabl
 
 To interact with the local contract, be sure to switch your MetaMask Network to `Localhost 8545`
 
-🔏 Edit your smart contract `YourContract.sol` in `packages/hardhat/contracts`
-
-📝 Edit your frontend in `packages/frontend/pages/index.tsx`
-
-💼 Edit your deployment scripts in `packages/hardhat/scripts/deploy`
+To set up cream and gelato environments, run the following command:
+```bash
+cd packages/hardhat/ && yarn hardhat run scripts/setup.ts
+```
+This will let an account deposit a token to Cream fi and borrow the other token. At this time, a health factor is `9.0`.
 
 📱 Open http://localhost:3000 to see the app
-
-# 📚 Documentation
-
-Documentation, tutorials, challenges, and many more resources, visit: [docs.scaffoldeth.io](https://docs.scaffoldeth.io)
-
-# 🔭 Learning Solidity
-
-📕 Read the docs: https://docs.soliditylang.org
-
-📚 Go through each topic from [solidity by example](https://solidity-by-example.org) editing `YourContract.sol` in **🏗 scaffold-eth**
-
-- [Primitive Data Types](https://solidity-by-example.org/primitives/)
-- [Mappings](https://solidity-by-example.org/mapping/)
-- [Structs](https://solidity-by-example.org/structs/)
-- [Modifiers](https://solidity-by-example.org/function-modifier/)
-- [Events](https://solidity-by-example.org/events/)
-- [Inheritance](https://solidity-by-example.org/inheritance/)
-- [Payable](https://solidity-by-example.org/payable/)
-- [Fallback](https://solidity-by-example.org/fallback/)
-
-📧 Learn the [Solidity globals and units](https://solidity.readthedocs.io/en/v0.6.6/units-and-global-variables.html)
-
-# 🛠 Buidl
-
-Check out all the [active branches](https://github.com/austintgriffith/scaffold-eth/branches/active), [open issues](https://github.com/austintgriffith/scaffold-eth/issues), and join/fund the 🏰 [BuidlGuidl](https://BuidlGuidl.com)!
-
-# 💬 Support Chat
-
-Join the telegram [support chat 💬](https://t.me/joinchat/KByvmRe5wkR-8F_zz6AjpA) to ask questions and find others building with 🏗 scaffold-eth!
-
-🙏 Please check out our [Gitcoin grant](https://gitcoin.co/grants/2851/scaffold-eth) too!
