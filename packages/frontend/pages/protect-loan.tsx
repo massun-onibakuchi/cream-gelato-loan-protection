@@ -1,20 +1,17 @@
+import React, { useEffect, useReducer, useState } from 'react'
 import {
   Box,
   Button,
   Divider,
-  Heading,
   Slider,
   SliderFilledTrack,
   SliderThumb,
   SliderTrack,
-  Spacer,
-  Stack,
   Text,
   useToast,
 } from '@chakra-ui/react'
-import { useEthers } from '@usedapp/core'
 import { ethers, utils } from 'ethers'
-import React, { useEffect, useReducer, useState } from 'react'
+import { useEthers } from '@usedapp/core'
 import { Layout } from '../components/layout/Layout'
 import { initialOptions, optionReducer } from '../components/optionReducer'
 import { SelectCollateral, SelectDebt } from '../components/AssetSelect'

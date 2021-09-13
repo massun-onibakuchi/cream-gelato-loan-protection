@@ -8,7 +8,6 @@ import {
   Container,
   Divider,
   Flex,
-  Icon,
   Image,
   Link,
   Menu,

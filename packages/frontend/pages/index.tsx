@@ -1,6 +1,6 @@
-import { Box, Divider, Heading, Slider, SliderFilledTrack, SliderThumb, SliderTrack, Text } from '@chakra-ui/react'
-import { utils } from 'ethers'
 import React from 'react'
+import { Box, Divider, Slider, SliderFilledTrack, SliderThumb, SliderTrack, Text } from '@chakra-ui/react'
+import { utils } from 'ethers'
 import { ProtectioinTable as ProtectionTable } from '../components/AssetsTable'
 import { Layout } from '../components/layout/Layout'
 import { useAccountData } from '../hooks/useAccountData'

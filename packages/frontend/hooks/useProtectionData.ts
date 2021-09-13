@@ -1,29 +1,11 @@
-import { BigNumber } from '@ethersproject/bignumber'
-import { useContractCall, useEthers } from '@usedapp/core'
-import { utils } from 'ethers'
 import { useState, useEffect, useMemo } from 'react'
-import { CREAM_GELATO_CONTRACTS } from '../constants'
+import { utils } from 'ethers'
+import { useContractCall, useEthers } from '@usedapp/core'
 import { useLoanSaverServiceContract } from './useContract'
+import { useReserveData } from './useReserveData'
+import { CREAM_GELATO_CONTRACTS } from '../constants'
+import { ProtectionAssetData, ProtectionData } from '../types/ProtectionData'
 import CreamLoanSaverService from '../artifacts/contracts/CreamLoanSaverService.sol/CreamLoanSaverService.json'
-import { ReserveData, useReserveData } from './useReserveData'
-
-export type ProtectionData = {
-  protectionId: string
-  thresholdHealthFactor: BigNumber
-  wantedHealthFactor: BigNumber
-  colToken: string
-  debtToken: string
-}
-
-export type ProtectionAssetData = {
-  col: ReserveData
-  debt: ReserveData
-  protectionId: string
-  thresholdHealthFactor: BigNumber
-  wantedHealthFactor: BigNumber
-  colToken: string
-  debtToken: string
-}
 
 export function useProtectionData() {
   const { account, chainId } = useEthers()
@@ -81,8 +63,6 @@ export function useProtectionFullData(): ProtectionAssetData[] {
         ...v,
         col: reserveData.find((d) => d.address == v.colToken),
         debt: reserveData.find((d) => d.address == v.debtToken),
-        // col:{... reserveData.find(d => d.address == v.colToken)},
-        // debt:{... reserveData.find(d => d.address == v.colToken)},
       }
     })
   }, [protections, reserveData])

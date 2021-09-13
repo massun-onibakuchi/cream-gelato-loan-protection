@@ -1,10 +1,7 @@
 import { BigNumber } from 'ethers'
-import React, { useEffect, useState } from 'react'
-import { ChainId, useEthers } from '@usedapp/core'
+import { useEffect, useState } from 'react'
+import { useEthers } from '@usedapp/core'
 import { useLoanSaverServiceContract } from './useContract'
-
-// type Resolve<T extends Promise<any>> = T extends PromiseLike<infer P> ? P : never
-// type AccountData= Partial<Resolve<ReturnType<LoanSaverType['getUserAccountData']>>
 
 type AccountData = {
   totalCollateralInEth: BigNumber

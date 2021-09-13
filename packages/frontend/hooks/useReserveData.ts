@@ -1,19 +1,8 @@
-import { BigNumber } from 'ethers'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useEthers } from '@usedapp/core'
-import { TOKEN_METADATA } from '../constants'
 import { useLoanSaverServiceContract } from './useContract'
-
-type Resolve<T extends Promise<any>> = T extends PromiseLike<infer P> ? P : never
-type TokenMetaDataType = typeof TOKEN_METADATA[keyof typeof TOKEN_METADATA][0]
-
-export type ReserveData = {
-  balanceUnderlying: BigNumber
-  debtUnderlying: BigNumber
-  exchangeRateStored: BigNumber
-  supplyRatePerBlock: BigNumber
-  borrowRatePerBlock: BigNumber
-} & TokenMetaDataType
+import { TOKEN_METADATA } from '../constants'
+import { ReserveData } from '../types/ReserveData'
 
 export function useReserveData(): ReserveData[] {
   const [assets, setAssets] = useState([])

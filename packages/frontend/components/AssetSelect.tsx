@@ -1,7 +1,6 @@
 import React from 'react'
-import { Select, Stack, Text } from '@chakra-ui/react'
-import { BigNumber } from 'ethers'
-import { ReserveData } from '../hooks/useReserveData'
+import { Select } from '@chakra-ui/react'
+import { ReserveData } from '../types/ReserveData'
 
 function SelectItem(props) {
   return <option value={props.value}>{props.name}</option>

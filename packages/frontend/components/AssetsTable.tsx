@@ -1,9 +1,9 @@
 import React from 'react'
-import { Table, Thead, Tbody, Tr, Th, Td, Icon, Image, Box, Wrap } from '@chakra-ui/react'
+import { Table, Thead, Tbody, Tr, Th, Td, Box, Wrap } from '@chakra-ui/react'
 import { BigNumber, utils } from 'ethers'
 import { TokenIcon } from './TokenIcon'
-import { ProtectionAssetData, useProtectionFullData } from '../hooks/useProtectionData'
-import { ReserveData } from '../hooks/useReserveData'
+import { ReserveData } from '../types/ReserveData'
+import { ProtectionAssetData } from '../types/ProtectionData'
 
 type RowItemType = {
   name: string
