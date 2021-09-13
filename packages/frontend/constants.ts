@@ -16,6 +16,7 @@ export const TOKEN_METADATA = {
       decimals: 6,
       address: CUSDC_ADDRESS,
       underlyingAddress: USDC_ADDRESS,
+      logoURI: 'https://tokens.1inch.exchange/0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48.png',
     },
     {
       name: 'MockToken',
@@ -23,6 +24,7 @@ export const TOKEN_METADATA = {
       decimals: 18,
       address: CTOKEN_ADDRESS,
       underlyingAddress: MOCK_TOKEN_ADDRESS,
+      logoURI: 'https://tokens.1inch.exchange/0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e.png',
     },
   ],
 }

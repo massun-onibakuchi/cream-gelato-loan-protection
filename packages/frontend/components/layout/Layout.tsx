@@ -6,7 +6,9 @@ import {
   Box,
   Button,
   Container,
+  Divider,
   Flex,
+  Icon,
   Image,
   Link,
   Menu,
@@ -71,11 +73,20 @@ export const Layout = ({ children, customMeta }: LayoutProps): JSX.Element => {
     <>
       <Head customMeta={customMeta} />
       <header>
+        {/* <Flex
+          py={[4, null, null, 0]}
+        >
+          <NextLink href="/" passHref>
+            <Link>
+              <Icon />
+            </Link>
+          </NextLink>
+        </Flex> */}
         <Container maxWidth="container.xl">
-          <SimpleGrid columns={[1, 1, 1, 2]} alignItems="center" justifyContent="space-between" py="8">
+          <SimpleGrid columns={[1, 1, 1, 2]} alignItems="center" justifyContent="space-between" py="4" >
             <Flex py={[4, null, null, 0]}>
               <NextLink href="/" passHref>
-                <Link px="4" py="1">
+                <Link px="  4" py="1">
                   Home
                 </Link>
               </NextLink>
@@ -123,6 +134,7 @@ export const Layout = ({ children, customMeta }: LayoutProps): JSX.Element => {
               <AlertDescription>{getErrorMessage(error)}</AlertDescription>
             </Alert>
           )}
+          <Divider my="1" borderColor="gray.400" />
           {children}
           {notifications.map((notification) => {
             if (notification.type === 'walletConnected') {
@@ -143,9 +155,9 @@ export const Layout = ({ children, customMeta }: LayoutProps): JSX.Element => {
         </Container>
       </main>
       <footer>
-        <Container mt="8" py="8" maxWidth="container.xl">
-          <Text>
-            Powered by <Link href="https://twitter.com/">Gelato Network</Link>
+        <Container mt="4" py="4" maxWidth="container.xl" centerContent>
+          <Text fontSize="sm">
+            Powered by <Link href="https://twitter.com/gelatonetwork">Gelato Network</Link>
           </Text>
         </Container>
       </footer>

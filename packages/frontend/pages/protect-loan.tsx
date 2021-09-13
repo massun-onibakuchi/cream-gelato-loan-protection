@@ -7,15 +7,18 @@ import {
   SliderFilledTrack,
   SliderThumb,
   SliderTrack,
+  Spacer,
+  Stack,
   Text,
+  useToast,
 } from '@chakra-ui/react'
-import { useEthers, useSendTransaction } from '@usedapp/core'
-import { BigNumber, ethers, providers, utils } from 'ethers'
+import { useEthers } from '@usedapp/core'
+import { ethers, utils } from 'ethers'
 import React, { useEffect, useReducer, useState } from 'react'
 import { Layout } from '../components/layout/Layout'
 import { initialOptions, optionReducer } from '../components/optionReducer'
 import { SelectCollateral, SelectDebt } from '../components/AssetSelect'
-import { AssetsTable } from '../components/AssetsTable'
+import { AssetTable } from '../components/AssetsTable'
 import { useAccountData } from '../hooks/useAccountData'
 import { useReserveData } from '../hooks/useReserveData'
 import { useSubmitProtection } from '../hooks/useSubmitProtection'
@@ -33,13 +36,11 @@ function HomeIndex(): JSX.Element {
   const [isLoading, setLoanding] = useState(false)
 
   const { state: submissionState, submitProtection, events: submissionEvents } = useSubmitProtection()
-  const [approvalState, approve, ,] = useApproveCallback(
+  const [approvalState, approve, approvalTxnState] = useApproveCallback(
     { isNative: false, tokenAddr: protectionAssets?.col, amount: ethers.constants.MaxUint256 },
     account,
   )
-
-  // console.log('reserveData :>> ', reserveData)
-  console.log('approveState :>> ', approvalState)
+  const toast = useToast()
 
   async function sendApproveTxn() {
     if (!library || !account || isLoading || !approvalState || !approve) return
@@ -49,8 +50,20 @@ function HomeIndex(): JSX.Element {
   }
 
   async function sendSubmitProtectionTxn() {
+    console.log('submissionState :>> ', submissionState)
     if (!library || !account || isLoading || !submissionState || !submitProtection) return
-    if (!(targetHealth > thresholdHealth) || !(thresholdHealth > 1)) return
+    if (!(targetHealth > thresholdHealth) || !(thresholdHealth > 1)) {
+      toast({
+        title:
+          thresholdHealth <= 1
+            ? `Threshold health factor must be greater than 1`
+            : `Target health factor must be greater than threshold one`,
+        status: 'error',
+        isClosable: true,
+        position: 'top',
+      })
+      return
+    }
     setLoanding(true)
     await submitProtection({
       thresholdHealth: toWei(thresholdHealth.toString()),
@@ -63,11 +76,43 @@ function HomeIndex(): JSX.Element {
   }
   async function updateTransationStatus() {
     if (!approvalState || !submissionState) return
+    if (submissionState.status === 'Exception') {
+      toast({
+        title: submissionState.errorMessage,
+        status: 'error',
+        isClosable: true,
+        position: 'top',
+      })
+      setLoanding(false)
+      return
+    }
+    if (approvalTxnState.status === 'Exception') {
+      toast({
+        title: approvalTxnState.errorMessage,
+        status: 'error',
+        isClosable: true,
+        position: 'top',
+      })
+      setLoanding(false)
+      return
+    }
     if (submissionState.status === 'Mining') {
+      toast({
+        title: 'Waiting the transaction is mined...',
+        status: 'info',
+        isClosable: true,
+        position: 'top',
+      })
       setLoanding(true)
       return
     }
     if (approvalState === ApprovalState.PENDING) {
+      toast({
+        title: 'Waiting the transaction is mined...',
+        status: 'info',
+        isClosable: true,
+        position: 'top',
+      })
       setLoanding(true)
       return
     }
@@ -82,20 +127,14 @@ function HomeIndex(): JSX.Element {
     updateTransationStatus()
   }, [approvalState, submissionState])
 
-  ///@todo submitProtection 機能するか？
-
   return (
     <Layout>
-      <Heading as="h1" mb="8">
-        Cream Fi x Gelato:Loan Protection System
-      </Heading>
-      <Box maxWidth="container.sm" p="8" mt="8" bg="gray.100">
-        <Divider my="8" borderColor="gray.400" />
+      <Box maxWidth="container.md" p="8" mt="6" bg="gray.100">
         <Box>
           <Text fontSize="lg">{'Collateral & Debt'}</Text>
-          <AssetsTable data={reserveData} />
+          <AssetTable data={reserveData} />
         </Box>
-        <Divider my="8" borderColor="gray.400" />
+        <Divider my="4" borderColor="gray.400" />
         <Box>
           <Text fontSize="lg">Select collateral asset for loan protection</Text>
           <SelectCollateral
@@ -103,6 +142,9 @@ function HomeIndex(): JSX.Element {
             onChange={(e) => optionDispatch({ type: 'SET_COL', col: e.target.value })}
             tokenMetaData={reserveData}
           />
+        </Box>
+        <Divider my="4" borderColor="gray.400" />
+        <Box>
           <Text fontSize="lg">Select debt asset for loan protection</Text>
           <SelectDebt
             bor={protectionAssets.bor}
@@ -110,7 +152,7 @@ function HomeIndex(): JSX.Element {
             tokenMetaData={reserveData}
           />
         </Box>
-        <Divider my="8" borderColor="gray.400" />
+        <Divider my="4" borderColor="gray.400" />
         <Box>
           <Text fontSize="lg">Health Factor:{utils.formatEther(accountData.healthFactor)}</Text>
           <Slider
@@ -165,7 +207,7 @@ function HomeIndex(): JSX.Element {
             {approvalState === ApprovalState.APPROVED ? 'Submit protection' : 'Approve'}
           </Button>
         </Box>
-        <Divider my="8" borderColor="gray.400" />
+        <Divider my="4" borderColor="gray.400" />
       </Box>
     </Layout>
   )

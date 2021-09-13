@@ -1,5 +1,5 @@
 import React from 'react'
-import { Select } from '@chakra-ui/react'
+import { Select, Stack, Text } from '@chakra-ui/react'
 import { BigNumber } from 'ethers'
 import { ReserveData } from '../hooks/useReserveData'
 

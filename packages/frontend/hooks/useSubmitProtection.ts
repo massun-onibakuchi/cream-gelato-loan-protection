@@ -3,15 +3,16 @@ import { useContractFunction, useEthers } from '@usedapp/core'
 import { useLoanSaverResolverContract, useLoanSaverServiceContract } from './useContract'
 
 export function useSubmitProtection() {
-  const { account } = useEthers()
+  const { account, chainId } = useEthers()
   const loanSaver = useLoanSaverServiceContract()
   const resolverContract = useLoanSaverResolverContract()
 
   // @ts-ignore
   const { state, send, events } = useContractFunction(loanSaver, 'submitProtection', { transactionName: 'Submit' })
 
-  if (!loanSaver || !account || !resolverContract) return { state: null, submitProtection: null, events: null }
-  if (!state || !send || !events) return { state: null, submitProtection: null, events: null }
+  if (!loanSaver || !account || !resolverContract || !chainId) {
+    return { state: null, submitProtection: null, events: null }
+  }
   return {
     state,
     submitProtection: async ({
@@ -32,9 +33,9 @@ export function useSubmitProtection() {
       const resolverData = resolverContract.interface.encodeFunctionData('checker', [
         account,
         resolverCheckerIndex ||
-          (await resolverContract
-            ?.getUserProtectionCount(account)
-            .then((count) => count.add(1))
+          (await loanSaver
+            .getUserProtectionCount(account)
+            .then((count) => BigNumber.from(count).add(1))
             .catch((e) => {
               console.debug('can not get user protection count', e)
               return 0

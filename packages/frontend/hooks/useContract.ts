@@ -2,9 +2,10 @@ import { Contract, ethers, utils } from 'ethers'
 import { JsonRpcSigner, Web3Provider } from '@ethersproject/providers'
 import { useMemo } from 'react'
 import { ERC20, useEthers } from '@usedapp/core'
-import CreamLoanSaverServiceTest from '../artifacts/contracts/CreamLoanSaverService.sol/CreamLoanSaverService.json'
+import CreamLoanSaverService from '../artifacts/contracts/CreamLoanSaverService.sol/CreamLoanSaverService.json'
 import LoanSaverResolver from '../artifacts/contracts/LoanSaverResolver.sol/LoanSaverResolver.json'
 import { CREAM_GELATO_CONTRACTS } from '../constants'
+import { LoanSaverResolver as ResolverType, CreamLoanSaverService as LoanSaverServiceType } from '../types/typechain'
 
 // returns null on errors
 export function useContract<T extends Contract = Contract>(
@@ -48,12 +49,14 @@ function getProviderOrSigner(library: Web3Provider, account?: string): Web3Provi
   return account ? getSigner(library, account) : library
 }
 
-export function useLoanSaverServiceContract(): Contract {
-  return useContract(CREAM_GELATO_CONTRACTS[0]['CreamLoanSaverService'], CreamLoanSaverServiceTest.abi, true)
+export function useLoanSaverServiceContract(): LoanSaverServiceType {
+  return useContract(CREAM_GELATO_CONTRACTS[0]['CreamLoanSaverService'], CreamLoanSaverService.abi, true)
 }
-export function useLoanSaverResolverContract(): Contract {
+
+export function useLoanSaverResolverContract(): ResolverType {
   return useContract(CREAM_GELATO_CONTRACTS[0]['LoanSaverResolver'], LoanSaverResolver.abi, true)
 }
+
 export function useTokenContract(tokenAddress): Contract {
   return useContract(tokenAddress, ERC20.abi, true)
 }

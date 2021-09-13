@@ -20,7 +20,6 @@ export function useApproveCallback(
   const currentAllowance = useTokenAllowance(tokenAddr, account ?? undefined, spender)
   const pendingApproval = useHasPendingApproval(tokenAddr, spender)
   const tokenContract = useTokenContract(tokenAddr)
-  console.debug('amountToApprove :>> ', approvalData)
 
   // @ts-ignore
   const { state, send, events } = useContractFunction(tokenContract, 'approve', { transactionName: 'Approve' })
